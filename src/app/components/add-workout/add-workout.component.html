@@ -1,18 +1,18 @@
 <div class="bg-gray-100 flex items-center justify-center">
     <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-xl mt-20">
       <h2 class="text-2xl font-bold mb-6 text-center">Add Workout</h2>
-      <form >
+      <form (ngSubmit)="addWorkout()">
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
             User Name*
           </label>
-          <input name="username" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" type="text" id="username" placeholder="Enter user name" required>
+          <input [(ngModel)]="username" name="username" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" type="text" id="username" placeholder="Enter user name" required>
         </div>
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="workout-type">
             Workout Type*
           </label>
-          <select name="workoutType" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" id="workout-type" required>
+          <select [(ngModel)]="workoutType" name="workoutType" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" id="workout-type" required>
             <option value="">Select workout type</option>
             <option value="Running">Running</option>
             <option value="Cycling">Cycling</option>
@@ -25,7 +25,7 @@
           <label class="block text-gray-700 text-sm font-bold mb-2" for="workout-minutes">
             Workout Minutes*
           </label>
-          <input name="workoutMinutes" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" type="number" id="workout-minutes" placeholder="Enter workout minutes" required>
+          <input [(ngModel)]="workoutMinutes" name="workoutMinutes" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" type="number" id="workout-minutes" placeholder="Enter workout minutes" required>
         </div>
         <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
           Add Workout
