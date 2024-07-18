@@ -5,43 +5,20 @@
       <img src="https://img.icons8.com/?size=100&id=35583&format=png&color=000000" alt="">
       <span class="ml-3 text-xl">Health Challenge Tracker</span>
     </a>
-    <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-      <a class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">First Link</a>
-      <a class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">Second Link</a>
-      <a class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">Third Link</a>
-      <a class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">Fourth Link</a>
+    
+    <nav *ngIf="showNav" class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+      <a routerLink=""
+      class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">Home</a>
+      <a routerLink="add-workout"
+      class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">Add_Workout</a>
+      <a routerLink="workout-list"
+      class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">Workout_List</a>
+      <a class="mr-5 text-gray-800 hover:text-gray-950 cursor-pointer">Progress</a>
     </nav>
-    <!-- <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button> -->
   </div>
 </header>
 </div>
-<div class="flex ml-3 rounded-lg mt-2">
-<div class="w-1/2 ml-5 rounded-lg">
-  <img class="h-[500px] w-[600px] rounded-2xl "
-   src="https://static.vecteezy.com/system/resources/previews/022/741/468/non_2x/fitness-blog-and-workout-app-concept-personal-trainer-online-tiny-people-are-sport-training-active-lifestyle-and-fitness-training-modern-flat-cartoon-style-illustration-on-white-background-vector.jpg" alt="">
-</div>
-<div class="w-1/2 mt-20">
-  <h2 class="font-bold text-3xl font-serif">Welcome to Health Challenge Tracker!</h2>
-  <p class="mt-6 font-thin mr-20">
-    Your ultimate companion for a healthier, fitter, and more motivated you. At Health Challenge Tracker, we believe that
-    every step counts and every workout matters. Whether you're a fitness enthusiast or just starting your wellness
-    journey, our platform is designed to help you set goals, track progress, and stay inspired.</p>
-    <h3 class="text-xl font-semibold mt-10 ml-1">Start Your Journey Today!</h3>
-    <p class="mt-5 font-thin mr-20">
-      Embrace a healthier lifestyle with Health Challenge Tracker. Set your goals, track your progress, and achieve
-      greatness. Together, we can make every challenge a stepping stone to a fitter, healthier you.</p>
-</div>
-</div>
-
 
 <div class="container">
   <router-outlet></router-outlet>
 </div>
-
-<!-- <app-add-workout></app-add-workout> -->
-
-<!-- <workout-list.component></workout-list.component> -->
