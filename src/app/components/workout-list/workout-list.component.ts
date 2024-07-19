@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WorkoutService, User } from '../../services/workout.service';
 import { FormsModule } from '@angular/forms';
-import { WorkoutService, User, Workout } from '../../services/workout.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-workout-list',
@@ -12,48 +13,43 @@ import { WorkoutService, User, Workout } from '../../services/workout.service';
 })
 export class WorkoutListComponent implements OnInit {
   users: User[] = [];
-  searchName = '';
-  filterType = '';
-  page = 1;
-  pageSize = 5;
-  totalPages = 1;
-  workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga', 'Weightlifting'];
+  filteredUsers: User[] = [];
+  workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga', 'Weightlifting', 'Other'];
+  searchName: string = '';
+  filterType: string = '';
+  page: number = 1;
+  pageSize: number = 5;
+  private subscription: Subscription = new Subscription();
 
   constructor(private workoutService: WorkoutService) {}
 
   ngOnInit() {
-    this.workoutService.users$.subscribe(users => {
+    this.subscription = this.workoutService.users$.subscribe(users => {
       this.users = users;
       this.applyFilters();
     });
   }
 
-  getTotalMinutes(workouts: Workout[]): number {
-    return workouts.reduce((total, workout) => total + workout.minutes, 0);
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
-  applyFilters() {
-    let filteredUsers = this.users;
-
-    if (this.searchName) {
-      filteredUsers = filteredUsers.filter(user =>
-        user.name.toLowerCase().includes(this.searchName.toLowerCase())
-      );
-    }
-
-    if (this.filterType) {
-      filteredUsers = filteredUsers.filter(user =>
-        user.workouts.some(workout => workout.type === this.filterType)
-      );
-    }
-
-    this.totalPages = Math.ceil(filteredUsers.length / this.pageSize);
-    this.page = 1;
-    this.users = filteredUsers;
+  getTotalMinutes(user: User): number {
+    return user.workouts.reduce((total, workout) => total + workout.minutes, 0);
   }
 
   removeUser(id: number) {
     this.workoutService.removeUser(id);
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    this.filteredUsers = this.users.filter(user => {
+      const matchesName = user.name.toLowerCase().includes(this.searchName.toLowerCase());
+      const matchesType = !this.filterType || user.workouts.some(workout => workout.type === this.filterType);
+      return matchesName && matchesType;
+    });
+    this.page = 1; // Reset to the first page
   }
 
   previousPage() {
@@ -63,7 +59,7 @@ export class WorkoutListComponent implements OnInit {
   }
 
   nextPage() {
-    if (this.page < this.totalPages) {
+    if (this.page * this.pageSize < this.filteredUsers.length) {
       this.page++;
     }
   }
