@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-workout-progress',
   templateUrl: './workout-progress.component.html',
-  styleUrls: ['./workout-progress.component.css'],
+  // styleUrls: ['./workout-progress.component.css'],
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
