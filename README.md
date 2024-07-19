@@ -25,20 +25,20 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Getting Started
 
 1. **Install Dependencies**
-    npm install
+    - npm install
 
 2. **Run the Application**
-    ng server or ng s
+    - ng server or ng s
 
-# Hosted Web App
+## Hosted Web App
 
-    You can view the live version of the Health Challenge Tracker by visiting the following link:
-    [Health Challenge Tracker](https://health-challenge-tracker-three.vercel.app/)
+   -  You can view the live version of the Health Challenge Tracker by visiting the following link:
+      [Health Challenge Tracker](https://health-challenge-tracker-three.vercel.app/)
 
-# Acknowledgements
+## Acknowledgements
 
-    Angular for the framework.
-    Chart.js for charting.
-    Tailwind CSS for styling.
+  - Angular for the framework.
+  - Chart.js for charting.
+  - Tailwind CSS for styling.
 
 
