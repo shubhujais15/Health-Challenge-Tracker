@@ -1,8 +1,8 @@
 <div class="p-4 mt-4">
   <div class="mb-4 flex flex-col md:flex-row items-center">
     <label for="user-select" class="mr-2 text-lg">Select User:</label>
-    <select id="user-select" [(ngModel)]="selectedUser" (change)="updateChartData()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
-      <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+    <select id="user-select" [(ngModel)]="selectedUser" (ngModelChange)="updateChartData()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+      <option *ngFor="let user of users" [ngValue]="user">{{ user.name }}</option>
     </select>
   </div>
   <div class="flex justify-center">
