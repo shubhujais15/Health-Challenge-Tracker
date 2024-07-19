@@ -3,32 +3,34 @@
     <input [(ngModel)]="searchName" (ngModelChange)="applyFilters()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 mb-2 md:mb-0" type="text" placeholder="Search by name">
     <select [(ngModel)]="filterType" (ngModelChange)="applyFilters()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 ml-0 md:ml-2">
       <option value="">Filter by workout type</option>
-      <option value="Running">Running</option>
-      <option value="Cycling">Cycling</option>
-      <option value="Swimming">Swimming</option>
-      <option value="Yoga">Yoga</option>
-      <option value="Weightlifting">Weightlifting</option>
+      <option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</option>
     </select>
   </div>
   <div class="overflow-x-auto">
     <table class="min-w-full bg-white border mt-3">
       <thead class="bg-gray-100">
         <tr>
-          <th class="py-2 px-4 border text-center">User ID</th>
-          <th class="py-2 px-4 border text-center">Username</th>
-          <th class="py-2 px-4 border text-center">Workout Type</th>
-          <th class="py-2 px-4 border text-center">Workout Minutes</th>
+          <th class="py-2 px-4 border text-center">ID</th>
+          <th class="py-2 px-4 border text-center">Name</th>
+          <th class="py-2 px-4 border text-center">Workouts</th>
+          <th class="py-2 px-4 border text-center">Number of Workouts</th>
+          <th class="py-2 px-4 border text-center">Total Minutes</th>
           <th class="py-2 px-4 border text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let workout of filteredWorkouts.slice((page-1)*pageSize, page*pageSize)">
-          <td class="py-2 px-4 border text-center">{{ workout.userId }}</td>
-          <td class="py-2 px-4 border text-center">{{ workout.username }}</td>
-          <td class="py-2 px-4 border text-center">{{ workout.workoutType }}</td>
-          <td class="py-2 px-4 border text-center">{{ workout.workoutMinutes }}</td>
+        <tr *ngFor="let user of users.slice((page-1)*pageSize, page*pageSize)">
+          <td class="py-2 px-4 border text-center">{{ user.id }}</td>
+          <td class="py-2 px-4 border text-center">{{ user.name }}</td>
           <td class="py-2 px-4 border text-center">
-            <button (click)="removeWorkout(workout.userId)" class="bg-red-500 text-white px-3 py-1 rounded">Remove</button>
+            <ul>
+              <li *ngFor="let workout of user.workouts">{{ workout.type }} ({{ workout.minutes }} mins)</li>
+            </ul>
+          </td>
+          <td class="py-2 px-4 border text-center">{{ user.workouts.length }}</td>
+          <td class="py-2 px-4 border text-center">{{ getTotalMinutes(user.workouts) }}</td>
+          <td class="py-2 px-4 border text-center">
+            <button (click)="removeUser(user.id)" class="bg-red-500 text-white px-3 py-1 rounded">Remove</button>
           </td>
         </tr>
       </tbody>

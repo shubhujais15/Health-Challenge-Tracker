@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WorkoutService, Workout } from '../../services/workout.service';
+import { WorkoutService, User, Workout } from '../../services/workout.service';
 
 @Component({
   selector: 'app-workout-list',
@@ -11,40 +11,51 @@ import { WorkoutService, Workout } from '../../services/workout.service';
   styleUrls: ['./workout-list.component.css']
 })
 export class WorkoutListComponent implements OnInit {
-  workouts: Workout[] = [];
-  filteredWorkouts: Workout[] = [];
+  users: User[] = [];
   searchName = '';
   filterType = '';
   page = 1;
   pageSize = 5;
-  totalPages = 1;  // Initialize totalPages
+  totalPages = 1;
+  workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga', 'Weightlifting'];
 
   constructor(private workoutService: WorkoutService) {}
 
   ngOnInit() {
-    this.workoutService.workouts$.subscribe(workouts => {
-      this.workouts = workouts;
+    this.workoutService.users$.subscribe(users => {
+      this.users = users;
       this.applyFilters();
     });
   }
 
+  getTotalMinutes(workouts: Workout[]): number {
+    return workouts.reduce((total, workout) => total + workout.minutes, 0);
+  }
+
   applyFilters() {
-    // Filter workouts based on searchName and filterType
-    this.filteredWorkouts = this.workouts.filter(workout =>
-      workout.username.toLowerCase().includes(this.searchName.toLowerCase()) &&
-      (!this.filterType || workout.workoutType === this.filterType)
-    );
+    let filteredUsers = this.users;
 
-    // Update total pages based on filtered workouts
-    this.totalPages = Math.ceil(this.filteredWorkouts.length / this.pageSize);
+    if (this.searchName) {
+      filteredUsers = filteredUsers.filter(user =>
+        user.name.toLowerCase().includes(this.searchName.toLowerCase())
+      );
+    }
+
+    if (this.filterType) {
+      filteredUsers = filteredUsers.filter(user =>
+        user.workouts.some(workout => workout.type === this.filterType)
+      );
+    }
+
+    this.totalPages = Math.ceil(filteredUsers.length / this.pageSize);
+    this.page = 1;
+    this.users = filteredUsers;
   }
 
-  removeWorkout(userId: number) {
-    this.workoutService.removeWorkout(userId);
-    this.applyFilters(); // Reapply filters after removing a workout
+  removeUser(id: number) {
+    this.workoutService.removeUser(id);
   }
 
-  // Methods to handle page navigation
   previousPage() {
     if (this.page > 1) {
       this.page--;
