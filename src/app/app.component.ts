@@ -21,9 +21,9 @@ export class AppComponent {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        console.log('NavigationEnd:', event.urlAfterRedirects);
+        // console.log('NavigationEnd:', event.urlAfterRedirects);
         this.showNav = event.urlAfterRedirects !== '/';
-        console.log('Show Nav:', this.showNav);
+        // console.log('Show Nav:', this.showNav);
       });
   }
 }
