@@ -34,8 +34,9 @@
       </tbody>
     </table>
   </div>
-  <div class="mt-4 flex justify-between">
-    <button [disabled]="page === 1" (click)="page = page - 1" class="px-3 py-1 bg-gray-300 rounded-md">Previous</button>
-    <button [disabled]="page * pageSize >= filteredWorkouts.length" (click)="page = page + 1" class="px-3 py-1 bg-gray-300 rounded-md">Next</button>
+  <div class="mt-4 flex items-center justify-between">
+    <button [disabled]="page === 1" (click)="previousPage()" class="px-3 py-1 bg-gray-300 rounded-md">Previous</button>
+    <span class="px-4">Page {{ page }} of {{ totalPages }}</span>
+    <button [disabled]="page === totalPages" (click)="nextPage()" class="px-3 py-1 bg-gray-300 rounded-md">Next</button>
   </div>
 </div>

@@ -17,6 +17,7 @@ export class WorkoutListComponent implements OnInit {
   filterType = '';
   page = 1;
   pageSize = 5;
+  totalPages = 1;  // Initialize totalPages
 
   constructor(private workoutService: WorkoutService) {}
 
@@ -28,13 +29,31 @@ export class WorkoutListComponent implements OnInit {
   }
 
   applyFilters() {
+    // Filter workouts based on searchName and filterType
     this.filteredWorkouts = this.workouts.filter(workout =>
       workout.username.toLowerCase().includes(this.searchName.toLowerCase()) &&
       (!this.filterType || workout.workoutType === this.filterType)
     );
+
+    // Update total pages based on filtered workouts
+    this.totalPages = Math.ceil(this.filteredWorkouts.length / this.pageSize);
   }
 
   removeWorkout(userId: number) {
     this.workoutService.removeWorkout(userId);
+    this.applyFilters(); // Reapply filters after removing a workout
+  }
+
+  // Methods to handle page navigation
+  previousPage() {
+    if (this.page > 1) {
+      this.page--;
+    }
+  }
+
+  nextPage() {
+    if (this.page < this.totalPages) {
+      this.page++;
+    }
   }
 }
