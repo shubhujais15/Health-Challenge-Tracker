@@ -1,5 +1,5 @@
-<div class=" h-screen w-screen">
-<div class="bg-gray-100 m-1 h-screen rounded-xl flex items-center justify-center">
+<div class="h-screen w-screen">
+  <div class="bg-gray-100 m-1 h-screen rounded-xl flex items-center justify-center">
     <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-xl mb-36">
       <h2 class="text-2xl font-bold mb-6 text-center">Add Workout</h2>
       <form (ngSubmit)="addWorkout()">
@@ -13,14 +13,21 @@
           <label class="block text-gray-700 text-sm font-bold mb-2" for="workout-type">
             Workout Type*
           </label>
-          <select [(ngModel)]="workoutType" name="workoutType" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" id="workout-type" required>
+          <select [(ngModel)]="workoutType" (change)="checkCustomWorkoutType($event)" name="workoutType" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" id="workout-type" required>
             <option value="">Select workout type</option>
             <option value="Running">Running</option>
             <option value="Cycling">Cycling</option>
             <option value="Swimming">Swimming</option>
             <option value="Yoga">Yoga</option>
             <option value="Weightlifting">Weightlifting</option>
+            <option value="Other">Other</option>
           </select>
+        </div>
+        <div *ngIf="isCustomWorkout" class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="custom-workout-type">
+            Custom Workout Type*
+          </label>
+          <input [(ngModel)]="customWorkoutType" name="customWorkoutType" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" type="text" id="custom-workout-type" placeholder="Enter custom workout type" required>
         </div>
         <div class="mb-6">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="workout-minutes">
@@ -35,4 +42,3 @@
     </div>
   </div>
 </div>
-  
