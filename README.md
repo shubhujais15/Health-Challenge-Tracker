@@ -1,27 +1,44 @@
-# HealthChallengeTracker
+# Health Challenge Tracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+## Overview
+
+The Health Challenge Tracker is a web application designed to help users track their workout progress. Users can add their names and workouts, view the data in a table, and see their progress displayed in a bar chart.
+
+## Features
+
+- Add user names and workout details.
+- Display the workout data in a table.
+- Visualize workout progress using a bar chart.
+- Responsive design for optimal viewing on various devices.
+
+## Prerequisites
+
+To run this project locally, you'll need to have the following installed:
+
+- [Node.js](https://nodejs.org/) (v14.x or higher)
+- [Angular CLI](https://angular.dev/cli) (v14.x or higher)
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. **Install Dependencies**
+    npm install
 
-## Build
+2. **Run the Application**
+    ng server or ng s
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+# Hosted Web App
 
-## Running unit tests
+    You can view the live version of the Health Challenge Tracker by visiting the following link:
+    [Health Challenge Tracker](https://health-challenge-tracker-three.vercel.app/)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Acknowledgements
 
-## Running end-to-end tests
+    Angular for the framework.
+    Chart.js for charting.
+    Tailwind CSS for styling.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
