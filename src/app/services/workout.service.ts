@@ -2,38 +2,68 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export interface Workout {
-  userId: number;
-  username: string;
-  workoutType: string;
-  workoutMinutes: number;
+  type: string;
+  minutes: number;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  workouts: Workout[];
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkoutService {
-  private workoutsSubject = new BehaviorSubject<Workout[]>([
-    { userId: 1, username: 'User1', workoutType: 'Running', workoutMinutes: 30 },
-    { userId: 2, username: 'User2', workoutType: 'Cycling', workoutMinutes: 45 },
-    { userId: 3, username: 'User3', workoutType: 'Yoga', workoutMinutes: 60 }
-  ]);
+  private usersSubject: BehaviorSubject<User[]>;
+  users$ = new BehaviorSubject<User[]>([]).asObservable();
 
-  workouts$ = this.workoutsSubject.asObservable();
+  constructor() {
+    const savedUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const initialUsers = savedUsers.length ? savedUsers : [
+      { id: 1, name: 'John Doe', workouts: [{ type: 'Running', minutes: 30 }, { type: 'Cycling', minutes: 45 }] },
+      { id: 2, name: 'Jane Smith', workouts: [{ type: 'Swimming', minutes: 60 }, { type: 'Running', minutes: 20 }] },
+      { id: 3, name: 'Mike Johnson', workouts: [{ type: 'Yoga', minutes: 50 }] }
+    ];
+
+    this.usersSubject = new BehaviorSubject<User[]>(initialUsers);
+    this.users$ = this.usersSubject.asObservable();
+    this.updateLocalStorage();
+  }
+
+  addWorkoutToUser(username: string, workout: Workout) {
+    const currentUsers = this.usersSubject.value;
+    const user = currentUsers.find(u => u.name === username);
+
+    if (user) {
+      user.workouts.push(workout);
+    } else {
+      const newUser: User = {
+        id: this.getNextUserId(),
+        name: username,
+        workouts: [workout]
+      };
+      currentUsers.push(newUser);
+    }
+
+    this.usersSubject.next([...currentUsers]);
+    this.updateLocalStorage();
+  }
+
+  removeUser(id: number) {
+    const currentUsers = this.usersSubject.value;
+    const updatedUsers = currentUsers.filter(user => user.id !== id);
+    this.usersSubject.next(updatedUsers);
+    this.updateLocalStorage();
+  }
 
   private getNextUserId(): number {
-    const currentWorkouts = this.workoutsSubject.value;
-    const maxUserId = currentWorkouts.length > 0 ? Math.max(...currentWorkouts.map(workout => workout.userId)) : 0;
-    return maxUserId + 1;
+    const currentUsers = this.usersSubject.value;
+    return currentUsers.length ? Math.max(...currentUsers.map(user => user.id)) + 1 : 1;
   }
 
-  addWorkout(workout: Omit<Workout, 'userId'>) {
-    const currentWorkouts = this.workoutsSubject.value;
-    const newWorkout = { ...workout, userId: this.getNextUserId() };
-    this.workoutsSubject.next([...currentWorkouts, newWorkout]);
-  }
-
-  removeWorkout(userId: number) {
-    const currentWorkouts = this.workoutsSubject.value;
-    this.workoutsSubject.next(currentWorkouts.filter(workout => workout.userId !== userId));
+  private updateLocalStorage() {
+    localStorage.setItem('users', JSON.stringify(this.usersSubject.value));
   }
 }
