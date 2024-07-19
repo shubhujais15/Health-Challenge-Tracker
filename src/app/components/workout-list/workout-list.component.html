@@ -1,42 +1,41 @@
 <div class="p-4 mt-6">
-    <div class="mb-4 flex justify-between items-center">
-      <input [(ngModel)]="searchName" (ngModelChange)="applyFilters()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300" type="text" placeholder="Search by name">
-      <select [(ngModel)]="filterType" (ngModelChange)="applyFilters()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 ml-2">
-        <option value="">Filter by workout type</option>
-        <option value="Running">Running</option>
-        <option value="Cycling">Cycling</option>
-        <option value="Swimming">Swimming</option>
-        <option value="Yoga">Yoga</option>
-        <option value="Weightlifting">Weightlifting</option>
-      </select>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="min-w-full bg-white border mt-3">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="py-2 px-4 border">User ID</th>
-            <th class="py-2 px-4 border">Username</th>
-            <th class="py-2 px-4 border">Workout Type</th>
-            <th class="py-2 px-4 border">Workout Minutes</th>
-            <th class="py-2 px-4 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let workout of filteredWorkouts.slice((page-1)*pageSize, page*pageSize)">
-            <td class="py-2 px-4 ml-12 border">{{ workout.userId }}</td>
-            <td class="py-2 px-4 border">{{ workout.username }}</td>
-            <td class="py-2 px-4 border">{{ workout.workoutType }}</td>
-            <td class="py-2 px-4 border">{{ workout.workoutMinutes }}</td>
-            <td class="py-2 px-4 border">
-              <button (click)="removeWorkout(workout.userId)" class="bg-red-500 text-white px-3 py-1 rounded">Remove</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="mt-4 flex justify-between">
-      <button [disabled]="page === 1" (click)="page = page - 1" class="px-3 py-1 bg-gray-300 rounded-md">Previous</button>
-      <button [disabled]="page * pageSize >= filteredWorkouts.length" (click)="page = page + 1" class="px-3 py-1 bg-gray-300 rounded-md">Next</button>
-    </div>
+  <div class="mb-4 flex flex-col md:flex-row justify-between items-center">
+    <input [(ngModel)]="searchName" (ngModelChange)="applyFilters()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 mb-2 md:mb-0" type="text" placeholder="Search by name">
+    <select [(ngModel)]="filterType" (ngModelChange)="applyFilters()" class="px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 ml-0 md:ml-2">
+      <option value="">Filter by workout type</option>
+      <option value="Running">Running</option>
+      <option value="Cycling">Cycling</option>
+      <option value="Swimming">Swimming</option>
+      <option value="Yoga">Yoga</option>
+      <option value="Weightlifting">Weightlifting</option>
+    </select>
   </div>
-  
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border mt-3">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="py-2 px-4 border text-center">User ID</th>
+          <th class="py-2 px-4 border text-center">Username</th>
+          <th class="py-2 px-4 border text-center">Workout Type</th>
+          <th class="py-2 px-4 border text-center">Workout Minutes</th>
+          <th class="py-2 px-4 border text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let workout of filteredWorkouts.slice((page-1)*pageSize, page*pageSize)">
+          <td class="py-2 px-4 border text-center">{{ workout.userId }}</td>
+          <td class="py-2 px-4 border text-center">{{ workout.username }}</td>
+          <td class="py-2 px-4 border text-center">{{ workout.workoutType }}</td>
+          <td class="py-2 px-4 border text-center">{{ workout.workoutMinutes }}</td>
+          <td class="py-2 px-4 border text-center">
+            <button (click)="removeWorkout(workout.userId)" class="bg-red-500 text-white px-3 py-1 rounded">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-4 flex justify-between">
+    <button [disabled]="page === 1" (click)="page = page - 1" class="px-3 py-1 bg-gray-300 rounded-md">Previous</button>
+    <button [disabled]="page * pageSize >= filteredWorkouts.length" (click)="page = page + 1" class="px-3 py-1 bg-gray-300 rounded-md">Next</button>
+  </div>
+</div>
