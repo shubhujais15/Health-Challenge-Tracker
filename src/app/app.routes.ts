@@ -6,19 +6,25 @@ import { WorkoutProgressComponent } from './components/workout-progress/workout-
 
 export const routes: Routes = [
     {
-        path:'',
+        path: '',
         component: HomeComponent
     },
     {
-        path:'add-workout',
+        path: 'add-workout',
         component: AddWorkoutComponent
     },
     {
-        path:'workout-list',
+        path: 'workout-list',
         component: WorkoutListComponent
     },
     {
         path: 'workout-progress',
         component: WorkoutProgressComponent
+    },
+    {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full'
     }
 ];
+
