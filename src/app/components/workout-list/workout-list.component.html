@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users.slice((page-1)*pageSize, page*pageSize)">
+        <tr *ngFor="let user of filteredUsers.slice((page-1)*pageSize, page*pageSize)">
           <td class="py-2 px-4 border text-center">{{ user.id }}</td>
           <td class="py-2 px-4 border text-center">{{ user.name }}</td>
           <td class="py-2 px-4 border text-center">
@@ -36,8 +36,9 @@
       </tbody>
     </table>
   </div>
-  <div class="flex justify-between mt-4">
+  <div class="flex justify-between mt-4 items-center">
     <button (click)="previousPage()" [disabled]="page === 1" class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50">Previous</button>
+    <span class="text-gray-700">Page {{ page }} of {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="page * pageSize >= filteredUsers.length" class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50">Next</button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkoutService, User } from '../../services/workout.service';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './workout-list.component.html',
   styleUrls: ['./workout-list.component.css']
 })
-export class WorkoutListComponent implements OnInit {
+export class WorkoutListComponent implements OnInit, OnDestroy {
   users: User[] = [];
   filteredUsers: User[] = [];
   workoutTypes: string[] = ['Running', 'Cycling', 'Swimming', 'Yoga', 'Weightlifting', 'Other'];
@@ -50,6 +50,10 @@ export class WorkoutListComponent implements OnInit {
       return matchesName && matchesType;
     });
     this.page = 1; // Reset to the first page
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredUsers.length / this.pageSize);
   }
 
   previousPage() {
